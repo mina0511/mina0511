@@ -1,0 +1,57 @@
+import 'package:flutter/material.dart';
+import 'dart:math';
+
+void main() {
+  runApp(MaterialApp(home: ServiceList()));
+}
+
+class ServiceList extends StatefulWidget {
+  @override
+  ServiceListState createState() => ServiceListState();
+}
+
+class ServiceListState extends State<ServiceList> {
+  List<bool> isChecked = [false, false, false, false, false, false];
+
+  List<String> listObj = [];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("dd"),
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: _insertNewObj,
+              child: new Icon(Icons.add),
+            )
+          ],
+        ),
+        body: Column(
+          children: <Widget>[
+            new InkWell(
+              onTap: _insertNewObj,
+              child: new Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                color: Colors.blue,
+                padding: const EdgeInsets.all(20.0),
+                child: new Text('Add new'),
+              ),
+            ),
+            new Expanded(
+              child: new ListView.builder(
+                  itemCount: listObj.length,
+                  itemBuilder: (BuildContext context, int index) => new Text(
+                      'index ${index.toString()} with value ${listObj[index].toLowerCase()}')),
+            ),
+          ],
+        ));
+  }
+
+  void _insertNewObj() {
+    var rng = new Random();
+    setState(() {
+      listObj.add(rng.nextInt(100).toString());
+    });
+  }
+}
