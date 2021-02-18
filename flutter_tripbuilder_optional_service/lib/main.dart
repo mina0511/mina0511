@@ -1,56 +1,53 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
-void main() => runApp(new MyApp());
+void main() {
+  runApp(MaterialApp(home: ServiceList()));
 
-int _count = 0;
-
-class MyApp extends StatefulWidget {
-  _HomePage createState() => new _HomePage();
 }
 
-class _HomePage extends State<MyApp> {
-  void _increase() {
-    setState(() => _count++);
-  }
 
+class ServiceList extends StatefulWidget {
+  @override
+  ServiceListState createState() => ServiceListState();
+}
+
+class ServiceListState extends State<ServiceList> {
+  List<bool> isChecked = [false, false, false, false, false, false];
+
+  List<String> listObj = [];
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Hello World App',
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('StatelessWidget'),
-          backgroundColor: new Color(0xFF8B1122),
-        ),
-        body: new Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Text(
-                "Up Votes : $_count",
-                style: new TextStyle(
-                  fontSize: 25.0,
-                  color: new Color(0xFF8B1122),
-                  fontWeight: FontWeight.w600,
-                ),
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("dd"),),
+        body: Column(
+          children: <Widget>[
+            new InkWell(
+              onTap: _insertNewObj,
+              child: new Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                color: Colors.blue,
+                padding: const EdgeInsets.all(20.0),
+                child: new Text('Add new'),
               ),
-              new RaisedButton(
-                child: new Text('Vote up',
-                    style: new TextStyle(
-                      fontSize: 20.0,
-                    )),
-                color: new Color(0xFF8B1122),
-                textColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                    vertical: 10.0, horizontal: 40.0),
-                elevation: 10.0,
-                splashColor: Colors.white70,
-                onPressed: _increase,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+            new Expanded(
+              child: new ListView.builder(
+                  itemCount: listObj.length,
+                  itemBuilder: (BuildContext context, int index) => new Text(
+                      'index ${index.toString()} with value ${listObj[index].toLowerCase()}')),
+            ),
+          ],
+        ));
   }
+
+  void _insertNewObj() {
+    var rng = new Random();
+    setState(() {
+      listObj.add(rng.nextInt(100).toString());
+    });
+  }
+  
 }
